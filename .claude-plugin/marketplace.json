@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "sentry-mcp",
-      "source": ".",
+      "source": "./sentry",
       "description": "Interact with Sentry for error monitoring, issue management, and debugging",
       "version": "1.0.0",
       "author": {

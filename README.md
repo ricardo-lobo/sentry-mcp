@@ -26,12 +26,12 @@ A Claude Code plugin for Sentry self-hosted instances. Query issues, manage erro
 git clone https://github.com/ricardo-lobo/sentry-mcp.git ~/.claude/plugins/sentry-mcp
 
 # Install dependencies
-cd ~/.claude/plugins/sentry-mcp && bun install
+cd ~/.claude/plugins/sentry-mcp/sentry && bun install
 ```
 
-Then add to your Claude Code settings or use:
+Then use with:
 ```bash
-claude --plugin-dir ~/.claude/plugins/sentry-mcp
+claude --plugin-dir ~/.claude/plugins/sentry-mcp/sentry
 ```
 
 ### Prerequisites
@@ -117,6 +117,7 @@ Ask Claude naturally:
 ## Development
 
 ```bash
+cd sentry
 bun install      # Install dependencies
 bun test         # Run tests (36 tests)
 bun run start    # Run MCP server standalone
@@ -127,17 +128,17 @@ bun run start    # Run MCP server standalone
 ```
 sentry-mcp/
 ├── .claude-plugin/
-│   ├── plugin.json        # Plugin manifest
 │   └── marketplace.json   # Marketplace registration
-├── commands/              # Slash commands (6)
-├── skills/
-│   └── sentry-debugging/  # Debugging workflow skill
-├── .mcp.json              # MCP server config
-├── src/                   # MCP server source
-│   ├── api/               # Sentry API client
-│   ├── tools/             # Tool implementations
-│   └── formatters/        # LLM-friendly formatters
-└── tests/                 # Test suite
+├── sentry/                # Plugin directory
+│   ├── .claude-plugin/
+│   │   └── plugin.json    # Plugin manifest
+│   ├── commands/          # Slash commands (6)
+│   ├── skills/
+│   │   └── sentry-debugging/
+│   ├── .mcp.json          # MCP server config
+│   ├── src/               # MCP server source
+│   └── tests/             # Test suite
+└── README.md
 ```
 
 ## License
