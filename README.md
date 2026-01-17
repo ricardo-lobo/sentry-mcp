@@ -15,7 +15,7 @@ A Claude Code plugin for Sentry self-hosted instances. Query issues, manage erro
 ### From GitHub (Marketplace-style)
 
 ```
-/plugin marketplace add YOUR_USERNAME/sentry-mcp
+/plugin marketplace add ricardo-lobo/sentry-mcp
 /plugin install sentry@sentry
 ```
 
@@ -23,7 +23,7 @@ A Claude Code plugin for Sentry self-hosted instances. Query issues, manage erro
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/sentry-mcp.git ~/.claude/plugins/sentry-mcp
+git clone https://github.com/ricardo-lobo/sentry-mcp.git ~/.claude/plugins/sentry-mcp
 
 # Install dependencies
 cd ~/.claude/plugins/sentry-mcp && bun install
