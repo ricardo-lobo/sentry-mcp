@@ -55,10 +55,30 @@ export SENTRY_URL="https://sentry.your-company.com"
 export SENTRY_AUTH_TOKEN="your-auth-token"
 ```
 
-**Create an Auth Token:**
-1. Go to `{SENTRY_URL}/settings/account/api/auth-tokens/`
-2. Create new token with scopes: `project:read`, `event:read`, `event:write`
-3. Set as `SENTRY_AUTH_TOKEN`
+### Creating a Sentry Auth Token
+
+1. **Open Sentry** and log in to your account
+2. **Navigate to API tokens:**
+   - Click your avatar (top-left) → **Settings**
+   - In the left sidebar: **Auth Tokens** (under Account)
+   - Or go directly to: `{SENTRY_URL}/settings/account/api/auth-tokens/`
+3. **Create a new token:**
+   - Click **"Create New Token"**
+   - Give it a name (e.g., "Claude Code Plugin")
+   - Select these scopes:
+     - `project:read` - List projects and read project settings
+     - `event:read` - Read issues and events
+     - `event:write` - Update issue status (resolve/ignore)
+   - Click **"Create Token"**
+4. **Copy the token** - it will only be shown once!
+5. **Add to your environment:**
+   ```bash
+   # In .env file or shell profile
+   SENTRY_URL=https://sentry.your-company.com
+   SENTRY_AUTH_TOKEN=sntrys_eyJ...  # Your token here
+   ```
+
+> **Note:** For self-hosted Sentry, replace `sentry.your-company.com` with your instance URL.
 
 ## Quick Start
 
