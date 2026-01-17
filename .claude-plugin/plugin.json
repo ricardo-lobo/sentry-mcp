@@ -1,0 +1,9 @@
+{
+  "name": "sentry",
+  "version": "1.0.0",
+  "description": "Interact with Sentry self-hosted instances for error monitoring, issue management, and debugging",
+  "author": {
+    "name": "Ricardo Lobo"
+  },
+  "keywords": ["sentry", "error-tracking", "debugging", "monitoring"]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "sentry",
+  "owner": {
+    "name": "Ricardo Lobo"
+  },
+  "metadata": {
+    "description": "Claude Code plugin for Sentry self-hosted error tracking"
+  },
+  "plugins": [
+    {
+      "name": "sentry",
+      "source": ".",
+      "description": "Interact with Sentry for error monitoring, issue management, and debugging",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ricardo Lobo"
+      },
+      "category": "productivity"
+    }
+  ]
+}
