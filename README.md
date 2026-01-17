@@ -6,8 +6,31 @@ A collection of Claude Code plugins by Ricardo Lobo.
 
 | Plugin | Description |
 |--------|-------------|
+| [skills](#skills) | Reusable agent skills (ralph-wizard, etc.) |
 | [commit](#commit) | Smart commits with security review and documentation awareness |
 | [sentry-mcp](#sentry-mcp) | Interact with Sentry for error monitoring and debugging |
+
+---
+
+## skills
+
+Reusable agent skills for common workflows.
+
+### Installation
+
+```
+/plugin install skills@ricardo-lobo
+```
+
+### Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| `ralph-wizard` | Guided prompt creation for Ralph loops - asks questions to gather specs, requirements, and completion criteria |
+
+### Usage
+
+Skills are automatically invoked when relevant. You can also invoke them directly by name.
 
 ---
 
@@ -178,6 +201,11 @@ bun run start    # Run MCP server standalone
 claude-code/
 ├── .claude-plugin/
 │   └── marketplace.json   # Marketplace registration
+├── skills/                # skills plugin
+│   ├── .claude-plugin/
+│   │   └── plugin.json
+│   └── skills/
+│       └── ralph-wizard/  # Ralph loop prompt wizard
 ├── commit/                # commit plugin
 │   ├── .claude-plugin/
 │   │   └── plugin.json

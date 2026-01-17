@@ -1,0 +1,9 @@
+{
+  "name": "skills",
+  "version": "1.0.0",
+  "description": "Reusable agent skills for common workflows",
+  "author": {
+    "name": "Ricardo Lobo"
+  },
+  "keywords": ["skills", "workflow", "automation"]
+}
