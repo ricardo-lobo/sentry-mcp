@@ -4,58 +4,26 @@ A collection of Claude Code plugins by Ricardo Lobo.
 
 ## Plugins
 
-### sentry-mcp
+| Plugin | Description |
+|--------|-------------|
+| [sentry-mcp](#sentry-mcp) | Interact with Sentry for error monitoring and debugging |
+
+---
+
+## sentry-mcp
 
 A plugin for Sentry self-hosted instances. Query issues, manage errors, and debug with Sentry context directly from Claude Code.
 
-## Features
+### Features
 
 - **6 MCP Tools** for Sentry API operations
 - **6 Slash Commands** for quick access
 - **Debugging Skill** - workflow guidance for error investigation
 - **LLM-Optimized Output** - summarized, actionable responses
-- **TypeScript + Bun** - fast, type-safe implementation
-
-## Installation
-
-### From GitHub (Marketplace-style)
-
-```
-/plugin marketplace add ricardo-lobo/claude-code
-/plugin install sentry-mcp@ricardo-lobo
-```
-
-### Manual Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/ricardo-lobo/claude-code.git ~/.claude/plugins/sentry-mcp
-
-# Install dependencies
-cd ~/.claude/plugins/sentry-mcp/sentry && bun install
-```
-
-Then use with:
-```bash
-claude --plugin-dir ~/.claude/plugins/sentry-mcp/sentry
-```
 
 ### Prerequisites
 
-**Option A: Project `.env` file** (recommended for per-project config):
-```bash
-# Create .env in your project root
-SENTRY_URL=https://sentry.your-company.com
-SENTRY_AUTH_TOKEN=your-auth-token
-```
-
-**Option B: System environment variables** (for global config):
-```bash
-export SENTRY_URL="https://sentry.your-company.com"
-export SENTRY_AUTH_TOKEN="your-auth-token"
-```
-
-### Creating a Sentry Auth Token
+#### 1. Create a Sentry Auth Token
 
 1. **Open Sentry** and log in to your account
 2. **Navigate to API tokens:**
@@ -71,16 +39,50 @@ export SENTRY_AUTH_TOKEN="your-auth-token"
      - `event:write` - Update issue status (resolve/ignore)
    - Click **"Create Token"**
 4. **Copy the token** - it will only be shown once!
-5. **Add to your environment:**
-   ```bash
-   # In .env file or shell profile
-   SENTRY_URL=https://sentry.your-company.com
-   SENTRY_AUTH_TOKEN=sntrys_eyJ...  # Your token here
-   ```
 
-> **Note:** For self-hosted Sentry, replace `sentry.your-company.com` with your instance URL.
+#### 2. Configure Environment Variables
 
-## Quick Start
+**Option A: Project `.env` file** (recommended):
+```bash
+# Create .env in your project root
+SENTRY_URL=https://sentry.your-company.com
+SENTRY_AUTH_TOKEN=sntrys_eyJ...
+```
+
+**Option B: System environment variables**:
+```bash
+# Add to ~/.bashrc, ~/.zshrc, or shell profile
+export SENTRY_URL="https://sentry.your-company.com"
+export SENTRY_AUTH_TOKEN="sntrys_eyJ..."
+```
+
+> **Note:** For self-hosted Sentry, use your instance URL instead of `sentry.io`.
+
+### Installation
+
+#### From GitHub (Marketplace-style)
+
+```
+/plugin marketplace add ricardo-lobo/claude-code
+/plugin install sentry-mcp@ricardo-lobo
+```
+
+#### Manual Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/ricardo-lobo/claude-code.git ~/.claude/plugins/claude-code
+
+# Install dependencies
+cd ~/.claude/plugins/claude-code/sentry && bun install
+```
+
+Then use with:
+```bash
+claude --plugin-dir ~/.claude/plugins/claude-code/sentry
+```
+
+### Quick Start
 
 1. **Configure defaults:**
    ```
@@ -97,7 +99,7 @@ export SENTRY_AUTH_TOKEN="your-auth-token"
    /sentry:issue FRONTEND-123
    ```
 
-## Commands
+### Commands
 
 | Command | Description |
 |---------|-------------|
@@ -108,7 +110,7 @@ export SENTRY_AUTH_TOKEN="your-auth-token"
 | `/sentry:find-event <event-id>` | Find issue by event ID |
 | `/sentry:stats [project]` | Get project error statistics |
 
-## Configuration
+### Configuration
 
 After running `/sentry:setup`, a config file is created at `.claude/sentry.local.md`:
 
@@ -119,7 +121,7 @@ project: frontend
 ---
 ```
 
-## MCP Tools
+### MCP Tools
 
 The plugin exposes these tools for programmatic access:
 
@@ -132,13 +134,15 @@ The plugin exposes these tools for programmatic access:
 | `update_issue_status` | Resolve, unresolve, or ignore issues |
 | `get_project_stats` | Get error rates and top issues |
 
-## Example Usage
+### Example Usage
 
 Ask Claude naturally:
 - "Show me unresolved issues in the frontend project"
 - "What's the error rate for backend-api?"
 - "Get details for issue FRONTEND-123 and help me debug it"
 - "Resolve issue 456"
+
+---
 
 ## Development
 
@@ -152,18 +156,17 @@ bun run start    # Run MCP server standalone
 ## Project Structure
 
 ```
-sentry-mcp/
+claude-code/
 ├── .claude-plugin/
 │   └── marketplace.json   # Marketplace registration
-├── sentry/                # Plugin directory
+├── sentry/                # sentry-mcp plugin
 │   ├── .claude-plugin/
-│   │   └── plugin.json    # Plugin manifest
-│   ├── commands/          # Slash commands (6)
-│   ├── skills/
-│   │   └── sentry-debugging/
-│   ├── .mcp.json          # MCP server config
-│   ├── src/               # MCP server source
-│   └── tests/             # Test suite
+│   │   └── plugin.json
+│   ├── .mcp.json
+│   ├── commands/          # 6 slash commands
+│   ├── skills/            # Debugging skill
+│   ├── src/               # MCP server (TypeScript)
+│   └── tests/             # 36 tests
 └── README.md
 ```
 
