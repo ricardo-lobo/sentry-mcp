@@ -1,4 +1,9 @@
 #!/usr/bin/env bun
+import { config } from "dotenv";
+
+// Load .env from current working directory (project root)
+config();
+
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
@@ -47,7 +52,7 @@ class SentryMcpServer {
     this.server = new Server(
       {
         name: "sentry-mcp",
-        version: "1.0.0",
+        version: "1.1.0",
       },
       {
         capabilities: {
