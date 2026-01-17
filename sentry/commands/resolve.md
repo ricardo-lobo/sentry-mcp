@@ -1,7 +1,7 @@
 ---
 description: Resolve, unresolve, or ignore a Sentry issue
 argument-hint: "<issue-id> [--unresolve|--ignore]"
-allowed-tools: ["mcp__sentry__update_issue_status", "Read"]
+allowed-tools: ["mcp__sentry__update_issue_status"]
 ---
 
 # Update Sentry Issue Status

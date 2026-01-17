@@ -1,25 +1,30 @@
 ---
 description: List recent Sentry issues with optional filters
 argument-hint: "[project] [--status unresolved|resolved|ignored]"
-allowed-tools: ["mcp__sentry__list_issues", "Read"]
+allowed-tools: ["mcp__sentry__list_issues"]
 ---
 
 # List Sentry Issues
 
 List recent issues from Sentry with optional filtering.
 
+## Environment Variables
+
+The MCP server reads these from the project's `.env` file:
+- `SENTRY_ORG` - Default organization slug
+- `SENTRY_PROJECT` - Default project slug (optional)
+
 ## Steps
 
-1. **Read settings** from `.claude/sentry.local.md` if it exists to get default organization and project
-2. **Parse arguments**:
-   - First argument (if provided): project slug override
+1. **Parse arguments**:
+   - First argument (if provided): project slug
    - `--status <status>`: Filter by status (unresolved, resolved, ignored)
-3. **Call the MCP tool** `mcp__sentry__list_issues` with:
-   - `organization`: From settings or ask user if not configured
-   - `project`: From argument or settings
+2. **Call the MCP tool** `mcp__sentry__list_issues` with:
+   - `organization`: Use `SENTRY_ORG` env var value, or ask user if not set
+   - `project`: From argument or `SENTRY_PROJECT` env var
    - `status`: From --status flag if provided
    - `limit`: 10 (reasonable default)
-4. **Display results** in a clear format showing:
+3. **Display results** in a clear format showing:
    - Issue short ID and title
    - Status, event count, user count
    - Last seen time
@@ -28,18 +33,8 @@ List recent issues from Sentry with optional filtering.
 ## Examples
 
 ```
-/sentry:issues                     # List issues using defaults from settings
+/sentry:issues                     # List issues using SENTRY_ORG from .env
 /sentry:issues frontend            # List issues for specific project
 /sentry:issues --status unresolved # Only unresolved issues
 /sentry:issues backend --status resolved
-```
-
-## Settings
-
-If `.claude/sentry.local.md` exists, read organization and project from YAML frontmatter:
-```yaml
----
-organization: my-org
-project: frontend
----
 ```

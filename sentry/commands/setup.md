@@ -1,53 +1,52 @@
 ---
-description: Configure Sentry plugin settings (organization, project, credentials)
-allowed-tools: ["Write", "Read"]
+description: Show Sentry plugin configuration instructions
+allowed-tools: []
 ---
 
-# Setup Sentry Plugin
+# Sentry Plugin Setup
 
-Configure default organization, project, and credentials for the Sentry plugin.
+This plugin uses environment variables for configuration. Add these to your project's `.env` file.
 
-## Steps
+## Required Environment Variables
 
-1. **Ask user for configuration**:
-   - Sentry URL (e.g., https://sentry.io or self-hosted URL)
-   - Organization slug
-   - Default project slug (optional)
+```bash
+# Your Sentry instance URL
+SENTRY_URL=https://sentry.your-company.com
 
-2. **Create settings file** at `.claude/sentry.local.md`:
+# API auth token (see below for how to create)
+SENTRY_AUTH_TOKEN=sntrys_eyJ...
 
-```yaml
----
-organization: <org-slug>
-project: <project-slug>
----
-
-# Sentry Configuration
-
-Your Sentry instance: <url>
-
-## Getting an Auth Token
-
-1. Go to <url>/settings/account/api/auth-tokens/
-2. Create a new token with scopes: project:read, event:read, event:write
-3. Set the environment variable: export SENTRY_AUTH_TOKEN="your-token"
-4. Set the URL: export SENTRY_URL="<url>"
+# Your organization slug
+SENTRY_ORG=my-org
 ```
 
-3. **Remind user about environment variables**:
-   - `SENTRY_URL` must be set to their Sentry instance URL
-   - `SENTRY_AUTH_TOKEN` must be set to their API token
+## Optional Environment Variables
 
-4. **Verify setup** by suggesting they run `/sentry:issues` to test
+```bash
+# Default project (if you mostly work with one project)
+SENTRY_PROJECT=frontend
+```
 
-## Example Output
+## Creating an Auth Token
 
-After setup, the user should have:
-- `.claude/sentry.local.md` with their org/project defaults
-- Environment variables configured for authentication
+1. **Open Sentry** and log in
+2. **Navigate to:** Settings → Account → Auth Tokens
+   Or go to: `{SENTRY_URL}/settings/account/api/auth-tokens/`
+3. **Create a new token** with these scopes:
+   - `project:read` - List projects and settings
+   - `event:read` - Read issues and events
+   - `event:write` - Update issue status
+4. **Copy the token** - it's only shown once
+
+## Verify Setup
+
+After configuring your `.env`, test with:
+```
+/sentry:issues
+```
 
 ## Notes
 
-- The settings file is gitignored (contains org-specific info)
-- Environment variables should be set in shell profile or .envrc
-- Token needs scopes: project:read, event:read, event:write
+- The `.env` file should be in your project root
+- Add `.env` to `.gitignore` to avoid committing secrets
+- Bun automatically loads `.env` files

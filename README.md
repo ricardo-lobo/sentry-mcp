@@ -42,21 +42,26 @@ A plugin for Sentry self-hosted instances. Query issues, manage errors, and debu
 
 #### 2. Configure Environment Variables
 
-**Option A: Project `.env` file** (recommended):
+Create a `.env` file in your project root:
+
 ```bash
-# Create .env in your project root
+# Required
 SENTRY_URL=https://sentry.your-company.com
 SENTRY_AUTH_TOKEN=sntrys_eyJ...
+SENTRY_ORG=my-org
+
+# Optional - default project for commands
+SENTRY_PROJECT=frontend
 ```
 
-**Option B: System environment variables**:
-```bash
-# Add to ~/.bashrc, ~/.zshrc, or shell profile
-export SENTRY_URL="https://sentry.your-company.com"
-export SENTRY_AUTH_TOKEN="sntrys_eyJ..."
-```
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `SENTRY_URL` | Yes | Your Sentry instance URL |
+| `SENTRY_AUTH_TOKEN` | Yes | API token with required scopes |
+| `SENTRY_ORG` | Yes | Organization slug |
+| `SENTRY_PROJECT` | No | Default project for commands |
 
-> **Note:** For self-hosted Sentry, use your instance URL instead of `sentry.io`.
+> **Note:** Bun automatically loads `.env` files. Add `.env` to your `.gitignore`.
 
 ### Installation
 
@@ -84,10 +89,7 @@ claude --plugin-dir ~/.claude/plugins/claude-code/sentry
 
 ### Quick Start
 
-1. **Configure defaults:**
-   ```
-   /sentry:setup
-   ```
+1. **Set up your `.env` file** with the required variables (see above)
 
 2. **List recent issues:**
    ```
@@ -103,23 +105,12 @@ claude --plugin-dir ~/.claude/plugins/claude-code/sentry
 
 | Command | Description |
 |---------|-------------|
-| `/sentry:setup` | Configure organization, project, and credentials |
+| `/sentry:setup` | Show environment variable configuration instructions |
 | `/sentry:issues [project] [--status ...]` | List recent issues with filters |
 | `/sentry:issue <id>` | Get detailed issue information |
 | `/sentry:resolve <id> [--unresolve\|--ignore]` | Update issue status |
 | `/sentry:find-event <event-id>` | Find issue by event ID |
 | `/sentry:stats [project]` | Get project error statistics |
-
-### Configuration
-
-After running `/sentry:setup`, a config file is created at `.claude/sentry.local.md`:
-
-```yaml
----
-organization: my-org
-project: frontend
----
-```
 
 ### MCP Tools
 

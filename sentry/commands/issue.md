@@ -1,7 +1,7 @@
 ---
 description: Get detailed information about a specific Sentry issue
 argument-hint: "<issue-id>"
-allowed-tools: ["mcp__sentry__get_issue", "Read"]
+allowed-tools: ["mcp__sentry__get_issue"]
 ---
 
 # Get Sentry Issue Details

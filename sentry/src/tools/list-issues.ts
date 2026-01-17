@@ -4,8 +4,8 @@ import { formatIssueList, formatError } from "../formatters";
 import type { IssueListOutput, ErrorOutput } from "../types";
 
 export const listIssuesSchema = z.object({
-  organization: z.string().describe("The organization slug"),
-  project: z.string().optional().describe("Filter by project slug"),
+  organization: z.string().optional().describe("The organization slug (defaults to SENTRY_ORG env var)"),
+  project: z.string().optional().describe("Filter by project slug (defaults to SENTRY_PROJECT env var)"),
   status: z
     .enum(["resolved", "unresolved", "ignored"])
     .optional()
@@ -27,9 +27,19 @@ export async function listIssues(
   client: SentryClient,
   input: ListIssuesInput
 ): Promise<IssueListOutput | ErrorOutput> {
+  const organization = input.organization || process.env.SENTRY_ORG;
+  const project = input.project || process.env.SENTRY_PROJECT;
+
+  if (!organization) {
+    return {
+      error: "Organization not specified",
+      suggestion: "Set SENTRY_ORG in your .env file or pass organization parameter",
+    };
+  }
+
   try {
-    const { data: issues, link } = await client.listIssues(input.organization, {
-      project: input.project,
+    const { data: issues, link } = await client.listIssues(organization, {
+      project,
       status: input.status,
       query: input.query,
       cursor: input.cursor,
@@ -44,17 +54,17 @@ export async function listIssues(
 export const listIssuesTool = {
   name: "list_issues",
   description:
-    "List issues in a Sentry organization with optional filters. Returns issue summaries with event counts, user impact, and timestamps. Use cursor for pagination.",
+    "List issues in a Sentry organization with optional filters. Returns issue summaries with event counts, user impact, and timestamps. Uses SENTRY_ORG and SENTRY_PROJECT from env if not specified.",
   inputSchema: {
     type: "object" as const,
     properties: {
       organization: {
         type: "string",
-        description: "The organization slug",
+        description: "The organization slug (defaults to SENTRY_ORG env var)",
       },
       project: {
         type: "string",
-        description: "Filter by project slug (optional)",
+        description: "Filter by project slug (defaults to SENTRY_PROJECT env var)",
       },
       status: {
         type: "string",
@@ -74,6 +84,6 @@ export const listIssuesTool = {
         description: "Number of issues to return, 1-100 (default 25)",
       },
     },
-    required: ["organization"],
+    required: [],
   },
 };
